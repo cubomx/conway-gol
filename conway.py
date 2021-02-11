@@ -7,7 +7,9 @@ import sys, argparse
 import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
+from os.path import exists
 from rules import *
+from pattern import *
 
 ON = 255
 OFF = 0
@@ -17,11 +19,40 @@ def randomGrid(N: int):
     """returns a grid of NxN random values"""
     return np.random.choice(vals, N*N, p=[0.2, 0.8]).reshape(N, N)
 
+def read_config(filename:str):
+    X = 10
+    Y = 10
+    grid = np.zeros(X*Y).reshape(X, Y)
+
+    
+    
+    
+
+    if exists(filename):
+        file_ = open(filename, "r")
+        for idx, x in enumerate(file_):
+            if idx == 0:
+                dims = x.split(" ")
+                X = int(dims[0])
+                Y = int(dims[1])
+                grid = np.zeros(X*Y).reshape(X, Y)
+            else:
+                fig = x.split(" ")
+                start_x = int(fig[0])
+                start_y = int(fig[1])
+                type_ = find_pattern(fig[2])
+                if type_ is not None:
+                    fig_x = type_.shape[0]
+                    fig_y = type_.shape[1]
+                    print(fig_x, fig_y)
+                    add_pattern(grid, type_, start_x, start_y, X, Y, fig_x, fig_y)
+        
+    file_.close()
+    return grid
+
 def addGlider(i:int, j:int, grid:np.ndarray):
     """adds a glider with top left cell at (i, j)"""
-    glider = np.array([[0,    0, 255], 
-                       [255,  0, 255], 
-                       [0,  255, 255]])
+    
     grid[i:i+3, j:j+3] = glider
 
 def update(frameNum:int, img, grid:np.ndarray, N: int):
@@ -42,26 +73,27 @@ def main():
     # sys.argv[0] is the script name itself and can be ignored
     # parse arguments
     parser = argparse.ArgumentParser(description="Runs Conway's Game of Life system.py.")
-    # TODO: add arguments
+   
+
+
+    
     
     # set grid size
-    N = 100
+    X = 100
+    Y = 100
         
     # set animation update interval
     updateInterval = 50
-
-    # declare grid
-    grid = np.array([])
-    # populate grid with random on/off - more off than on
-    grid = randomGrid(N)
-    # Uncomment lines to see the "glider" demo
-    grid = np.zeros(N*N).reshape(N, N)
-    addGlider(1, 1, grid)
+    if len(sys.argv) > 1:
+        print("Filename is: ", sys.argv[1]) 
+        grid = read_config(sys.argv[1])
+    else:
+        grid = randomGrid(X)
 
     # set up animation
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
-    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, N, ),
+    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, X, ),
                                   frames = 10,
                                   interval=updateInterval,
                                   save_count=50)
