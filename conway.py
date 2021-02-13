@@ -15,8 +15,8 @@ ON = 255
 OFF = 0
 vals = [ON, OFF]
 
-X = 100
-Y = 100
+X = 0
+Y = 0
 
 def randomGrid(N: int):
     """returns a grid of NxN random values"""
@@ -52,7 +52,7 @@ def read_config(filename:str):
                     fig_y = type_.shape[1]
                     add_pattern(grid, type_, start_x, start_y, X, Y, fig_x, fig_y)
                     
-        
+    print("X: {0} {1}".format(X, Y))
     file_.close()
     return grid
 
@@ -63,6 +63,7 @@ def update(frameNum:int, img, grid:np.ndarray, N: int):
     newGrid = grid.copy()
 
     newGrid = first_rule(grid, newGrid, N)
+
     # update data
     img.set_data(newGrid)
     grid[:] = newGrid[:]
@@ -80,7 +81,7 @@ def main():
     
     
     # set grid size
-    
+    grid = None
         
     # set animation update interval
     updateInterval = 50
@@ -90,14 +91,14 @@ def main():
         
     else:
         grid = randomGrid(X)
-
+    print("X: {0} {1},, {2} {3}".format(X, Y, grid.shape[0], grid.shape[1]))
     # set up animation
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
-    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, X, ),
-                                  frames = 10,
-                                  interval=updateInterval,
-                                  save_count=50)
+    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, X),
+                                  frames = 100,
+                                  interval=200,
+                                  save_count=100)
 
     plt.show()
 

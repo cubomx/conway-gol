@@ -3,5 +3,5 @@
 10 12 beehive #
 40 12 beehive #
 60 20 glider #
-80 30 spaceship_4 #
+70 30 spaceship_4 #
 10 60 tub #
