@@ -28,6 +28,15 @@ def first_rule(grid:np.ndarray, new_grid:np.ndarray, N:int):
             # check the rules for the survival of every cell
             search_neighbors(grid, new_grid, i, j, N)
     return new_grid
+
+
+def count_cells(grid:np.ndarray, x_limit:int, y_limit:int):
+    quantity = 0
+    for x in range (x_limit):
+        for y in range(y_limit):
+            if grid[x, y] == 255:
+                quantity += 1
+    return quantity
             
 
 

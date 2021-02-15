@@ -10,13 +10,18 @@ import matplotlib.animation as animation
 from os.path import exists
 from rules import *
 from pattern import *
+from matplotlib.image import AxesImage as image
+from saveData import *
 
 ON = 255
 OFF = 0
 vals = [ON, OFF]
 
+file_ = None
+
 X = 0
 Y = 0
+step = 0
 
 def randomGrid(N: int):
     """returns a grid of NxN random values"""
@@ -31,6 +36,7 @@ def read_config(filename:str):
     # first, check if the directory of the file exists
     if exists(filename):
         file_ = open(filename, "r")
+        print(type(file_))
         for idx, x in enumerate(file_):
             
             if idx == 0:
@@ -57,13 +63,24 @@ def read_config(filename:str):
     return grid
 
 
-def update(frameNum:int, img, grid:np.ndarray, N: int):
+def update(frameNum:int, img:image, grid:np.ndarray, N: int):
+    global X, Y, step
     # copy grid since we require 8 neighbors for calculation
     # and we go line by line 
     newGrid = grid.copy()
 
+    cells = count_cells(grid, X, Y)
+
+    step += 1
+    
     newGrid = first_rule(grid, newGrid, N)
 
+    if step <= 200:
+        saveData(step, cells, file_)
+    if step == 201:
+        close_file(file_)
+
+    
     # update data
     img.set_data(newGrid)
     grid[:] = newGrid[:]
@@ -71,6 +88,7 @@ def update(frameNum:int, img, grid:np.ndarray, N: int):
 
 # main() function
 def main():
+    global file_
     # Command line args are in sys.argv[1], sys.argv[2] ..
     # sys.argv[0] is the script name itself and can be ignored
     # parse arguments
@@ -91,10 +109,15 @@ def main():
         
     else:
         grid = randomGrid(X)
+    
     print("X: {0} {1},, {2} {3}".format(X, Y, grid.shape[0], grid.shape[1]))
+
+    file_ = create_file("data.txt")
+
     # set up animation
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
+    print(type(img))
     ani = animation.FuncAnimation(fig, update, fargs=(img, grid, X),
                                   frames = 100,
                                   interval=200,
