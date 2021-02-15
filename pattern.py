@@ -16,9 +16,36 @@ spaceship_4 = np.array([[0, 255, 255, 0, 0],
                         [255, 255, 0, 255, 255],
                         [0, 0, 255, 255, 0]])
 
+
+blinker = np.array([[255], [255], [255]])
+
+toad = np.array([[0, 255, 255, 255],
+                    [255, 255, 255, 0]])
+
+beacon = np.array([[255, 255, 0, 0],
+                    [255, 255, 0, 0],
+                    [0, 0, 255, 255],
+                    [0, 0, 255, 255]])
+
+loaf = np.array([[0, 255, 255, 0],
+                    [255, 0, 0, 255],
+                    [0, 255, 0, 255],
+                    [0, 0, 255, 0]])
+
+boat = np.array([[255, 255, 0],
+                    [255, 0, 255],
+                    [0, 255, 0]])
+
+tub = np.array([[0, 255, 0],
+                [255, 0, 255],
+                [0, 255, 0]])
+
+
+
     
 
-pattern = {"beehive": beehive, "block":block, "glider":glider, "spaceship_4":spaceship_4}
+pattern = {"beehive": beehive, "block":block, "glider":glider, "spaceship_4":spaceship_4, "blinker":blinker,
+"toad":toad, "beacon":beacon, "loaf":loaf, "boat":boat, "tub":tub}
 
 ''' Adding the pattern to the grid if possible'''
 

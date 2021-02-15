@@ -1,0 +1,8 @@
+100 100
+2 22 block #
+26 12 beehive #
+10 12 loaf #
+15 5 glider #
+25 8 boat #
+20 15 beacon #
+10 10 loaf #

@@ -1,0 +1,7 @@
+100 100
+22 22 block #
+26 12 beehive #
+30 12 loaf #
+20 5 glider #
+20 8 loaf #
+10 40 tub #

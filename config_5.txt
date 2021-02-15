@@ -1,0 +1,12 @@
+100 100
+2 22 block #
+26 12 beehive #
+10 12 loaf #
+15 5 glider #
+12 22 block #
+28 12 beehive #
+20 12 loaf #
+25 5 glider #
+22 22 beehive #
+15 12 loaf #
+15 5 glider #

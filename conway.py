@@ -19,8 +19,8 @@ vals = [ON, OFF]
 
 file_ = None
 
-X = 0
-Y = 0
+X = 100
+Y = 100
 step = 0
 
 def randomGrid(N: int):
@@ -88,7 +88,7 @@ def update(frameNum:int, img:image, grid:np.ndarray, N: int):
 
 # main() function
 def main():
-    global file_
+    global file_, X, Y
     # Command line args are in sys.argv[1], sys.argv[2] ..
     # sys.argv[0] is the script name itself and can be ignored
     # parse arguments
